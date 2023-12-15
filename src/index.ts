@@ -8,9 +8,8 @@ const app = new Hono();
 
 app.use('*', timing());
 
-app.get('/', c => c.text('Hello World'));
-
 app.route('/', routes);
+
 app.notFound(async (c) => {
 	c.status(404);
 	return c.render('/404');
@@ -44,7 +43,7 @@ app.onError((error, c) => {
 
 	c.status(payload.code);
 
-	return c.render('/error', { error });
+	return c.render('/error', { error: payload });
 });
 
 const server = Bun.serve({

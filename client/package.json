@@ -6,9 +6,11 @@
 		"bun": ">=1"
 	},
 	"devDependencies": {
+		"esbuild": "^0.19.9",
 		"preact-render-to-string": "^6.3.1"
 	},
 	"dependencies": {
+		"@kochav/css": "gitlab:binyamin/kochav-css",
 		"preact": "^10.19.3"
 	}
 }
