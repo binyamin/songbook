@@ -12,6 +12,8 @@
 		"noEmit": true,
 		"allowImportingTsExtensions": true,
 		"moduleDetection": "force",
+		"jsx": "react-jsx",
+		"jsxImportSource": "preact",
 		"allowJs": true, // allow importing `.js` from `.ts`
 		// best practices
 		"strict": true,

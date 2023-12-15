@@ -1,6 +1,7 @@
 import { Hono } from 'hono';
 import { timing } from 'hono/timing';
 
+import routes from './routes/index.ts';
 import { HttpError, status } from '../lib/http-error/index.ts';
 
 const app = new Hono();
@@ -9,6 +10,11 @@ app.use('*', timing());
 
 app.get('/', c => c.text('Hello World'));
 
+app.route('/', routes);
+app.notFound(async (c) => {
+	c.status(404);
+	return c.render('/404');
+});
 app.onError((error, c) => {
 	const payload: {
 		code: number,
@@ -38,7 +44,7 @@ app.onError((error, c) => {
 
 	c.status(payload.code);
 
-	return c.json({ ok: false, error });
+	return c.render('/error', { error });
 });
 
 const server = Bun.serve({
@@ -48,4 +54,4 @@ const server = Bun.serve({
 	},
 });
 
-console.info('Server running at '+ server.url);
+console.info('Server running at ' + server.url);
