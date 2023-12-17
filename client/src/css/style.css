@@ -1,4 +1,5 @@
 @import './kochav.css';
+@import './colors.css';
 
 .app {
 	min-height: inherit;
