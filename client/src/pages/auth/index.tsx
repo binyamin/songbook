@@ -1,3 +1,5 @@
+import { Button } from '../../components/elements/button'
+
 export const documentProps ={
 	title: 'Account',
 }
@@ -9,7 +11,7 @@ export function Page() {
 		<p>You are logged-in.</p>
 
 		<form action="/auth/logout" method='POST'>
-			<button type="submit">Log out</button>
+			<Button variant='solid' type="submit">Log out</Button>
 		</form>
 	</article>
 }
