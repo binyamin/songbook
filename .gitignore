@@ -6,6 +6,8 @@
 ## Generated
 node_modules/
 dist/
+drizzle/*.db*
+drizzle/migrations/
 
 ## Misc
 /other/

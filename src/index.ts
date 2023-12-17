@@ -2,6 +2,7 @@ import { Hono } from 'hono';
 import { timing } from 'hono/timing';
 
 import routes from './routes/index.ts';
+import authRoutes from './routes/auth.ts';
 import { HttpError, status } from '../lib/http-error/index.ts';
 
 const app = new Hono();
@@ -9,6 +10,7 @@ const app = new Hono();
 app.use('*', timing());
 
 app.route('/', routes);
+app.route('/auth', authRoutes);
 
 app.notFound(async (c) => {
 	c.status(404);

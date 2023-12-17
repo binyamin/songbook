@@ -20,6 +20,7 @@
 		"drizzle-valibot": "^0.1.1",
 		"hono": "^3.11.7",
 		"nanoid": "^5.0.4",
+		"oslo": "^0.24.0",
 		"valibot": "^0.24.1"
 	}
 }
