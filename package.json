@@ -12,9 +12,6 @@
 		"db:generate": "drizzle-kit generate:sqlite",
 		"db:migrate": "node scripts/migrate.js"
 	},
-	"resolutions": {
-		"@libsql/client": "$@libsql/client"
-	},
 	"dependencies": {
 		"@evilmartians/harmony": "^1.4.0",
 		"@kochav/css": "gitlab:binyamin/kochav-css#semver:^0.2.0",
@@ -36,5 +33,6 @@
 		"oslo": "^1.2.1",
 		"postcss-jit-props": "^1.0.16",
 		"valibot": "^1.5.0"
-	}
+	},
+	"packageManager": "pnpm@12.15.0"
 }
