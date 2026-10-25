@@ -5,7 +5,13 @@
 import './button.css';
 import { type ComponentProps, splitProps } from 'solid-js';
 
-type StatusType = 'primary' | 'success' | 'info' | 'warning' | 'danger' | 'discovery';
+type StatusType =
+	| 'primary'
+	| 'success'
+	| 'info'
+	| 'warning'
+	| 'danger'
+	| 'discovery';
 
 export interface BaseProps {
 	/**
@@ -23,28 +29,40 @@ export interface BaseProps {
 	color?: StatusType;
 }
 
-interface ButtonProps extends Omit<ComponentProps<'button'>, 'color'>, BaseProps {}
+interface ButtonProps
+	extends Omit<ComponentProps<'button'>, 'color'>, BaseProps {}
 
 export function Button(props: ButtonProps) {
-	const [{ color, variant = 'solid' }, domProps] = splitProps(props, ['color', 'variant']);
+	const [{ color, variant = 'solid' }, domProps] = splitProps(props, [
+		'color',
+		'variant',
+	]);
 
-	return <button
-		{...domProps}
-		class={'button'}
-		data-color={color}
-		data-variant={variant}
-	/>
+	return (
+		<button
+			{...domProps}
+			class={'button'}
+			data-color={color}
+			data-variant={variant}
+		/>
+	);
 }
 
-interface LinkButtonProps extends Omit<ComponentProps<'a'>, 'color'>, BaseProps {}
+interface LinkButtonProps
+	extends Omit<ComponentProps<'a'>, 'color'>, BaseProps {}
 
 export function LinkButton(props: LinkButtonProps) {
-	const [{ color, variant = 'solid' }, domProps] = splitProps(props, ['color', 'variant']);
+	const [{ color, variant = 'solid' }, domProps] = splitProps(props, [
+		'color',
+		'variant',
+	]);
 
-	return <a
-		{...domProps}
-		class={'button'}
-		data-color={color}
-		data-variant={variant}
-	/>
+	return (
+		<a
+			{...domProps}
+			class={'button'}
+			data-color={color}
+			data-variant={variant}
+		/>
+	);
 }

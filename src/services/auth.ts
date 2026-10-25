@@ -1,6 +1,6 @@
+import { LibSQLAdapter } from '@lucia-auth/adapter-sqlite';
 import { eq } from 'drizzle-orm';
 import { Lucia, TimeSpan } from 'lucia';
-import { LibSQLAdapter } from '@lucia-auth/adapter-sqlite';
 import { Argon2id } from 'oslo/password';
 
 import { client, db, schema } from '../../drizzle/index.js';
@@ -22,11 +22,11 @@ export const lucia = new Lucia(adapter, {
 	getUserAttributes(user) {
 		return {
 			username: user.username,
-		}
+		};
 	},
 });
 
-declare module "lucia" {
+declare module 'lucia' {
 	interface Register {
 		Lucia: typeof lucia;
 		DatabaseUserAttributes: {
@@ -36,7 +36,9 @@ declare module "lucia" {
 }
 
 export async function verify(username: string, password: string) {
-	const list = await db.select().from(schema.user).where(eq(schema.user.username, username));
+	const list = await db.select().from(schema.user).where(
+		eq(schema.user.username, username),
+	);
 
 	const user = list[0];
 	if (!user || !user.hashed_password) return false;
@@ -44,7 +46,7 @@ export async function verify(username: string, password: string) {
 	const res = await new Argon2id().verify(user.hashed_password, password);
 	if (res) {
 		return user;
-	} else  {
+	} else {
 		return null;
 	}
 }

@@ -1,10 +1,10 @@
-import type { APIRoute } from "astro";
+import type { APIRoute } from 'astro';
 
-import { lucia } from "~/services/auth.ts";
+import { lucia } from '~/services/auth.ts';
 
 export const POST: APIRoute = async (context) => {
 	if (!context.locals.session) {
-		return new Response("Unauthorized", {
+		return new Response('Unauthorized', {
 			status: 401,
 		});
 	}
@@ -13,7 +13,11 @@ export const POST: APIRoute = async (context) => {
 	await lucia.invalidateSession(context.locals.session.id);
 	// delete session cookie
 	const sessionCookie = lucia.createBlankSessionCookie();
-	context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+	context.cookies.set(
+		sessionCookie.name,
+		sessionCookie.value,
+		sessionCookie.attributes,
+	);
 
-	return context.redirect("/log-in", 302);
-}
+	return context.redirect('/log-in', 302);
+};

@@ -3,19 +3,21 @@ import { createInsertSchema } from 'drizzle-valibot';
 import { nanoid } from 'nanoid';
 import { type Input, omit, parse } from 'valibot';
 
-import { song as model, type Song } from '../models/index.ts';
 import { db, schema } from '../index.js';
+import { type Song, song as model } from '../models/index.ts';
 
-export type { Song }
+export type { Song };
 
 type ManyOptions = {
 	/** @default 25 */
 	limit?: number;
 	/** @default 0 */
 	offset?: number;
-}
+};
 
-export async function findMany(options: ManyOptions = {}): Promise<Pick<Song, 'id' | 'title'>[]> {
+export async function findMany(
+	options: ManyOptions = {},
+): Promise<Pick<Song, 'id' | 'title'>[]> {
 	options.limit ??= 25;
 	options.offset ??= 0;
 
@@ -27,7 +29,7 @@ export async function findMany(options: ManyOptions = {}): Promise<Pick<Song, 'i
 		.from(schema.song)
 		.orderBy(schema.song.title)
 		.limit(options.limit)
-		.offset(options.offset)
+		.offset(options.offset);
 
 	return list;
 }
@@ -37,12 +39,15 @@ export async function findOne(id: string): Promise<Song | null> {
 		.select()
 		.from(schema.song)
 		.limit(1)
-		.where(eq(schema.song.id, id))
+		.where(eq(schema.song.id, id));
 
 	return res[0] ?? null;
 }
 
-export const inputSchema = omit(createInsertSchema(schema.song, model.entries), ['id']);
+export const inputSchema = omit(
+	createInsertSchema(schema.song, model.entries),
+	['id'],
+);
 export type InputValue = Input<typeof inputSchema>;
 
 export async function insert(input: InputValue): Promise<Song> {
@@ -50,7 +55,7 @@ export async function insert(input: InputValue): Promise<Song> {
 
 	const res = await db
 		.insert(schema.song)
-		.values({ id: nanoid(), ...data, })
+		.values({ id: nanoid(), ...data })
 		.returning();
 
 	return res[0];

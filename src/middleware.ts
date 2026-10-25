@@ -4,13 +4,16 @@ import { verifyRequestOrigin } from 'lucia';
 import { lucia as lucia } from '~/services/auth.ts';
 
 export const onRequest = defineMiddleware(async (context, next) => {
-	if (context.request.method !== "GET") {
+	if (context.request.method !== 'GET') {
 		const originHeader = context.request.headers.get('Origin');
 		// NOTE: You may need to use `X-Forwarded-Host` instead
 		const hostHeader = context.request.headers.get('Host');
-		if (!originHeader || !hostHeader || !verifyRequestOrigin(originHeader, [hostHeader])) {
+		if (
+			!originHeader || !hostHeader
+			|| !verifyRequestOrigin(originHeader, [hostHeader])
+		) {
 			return new Response(null, {
-				status: 403
+				status: 403,
 			});
 		}
 	}
@@ -25,12 +28,20 @@ export const onRequest = defineMiddleware(async (context, next) => {
 	const { session, user } = await lucia.validateSession(sessionId);
 	if (session && session.fresh) {
 		const sessionCookie = lucia.createSessionCookie(session.id);
-		context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+		context.cookies.set(
+			sessionCookie.name,
+			sessionCookie.value,
+			sessionCookie.attributes,
+		);
 	}
 
 	if (!session) {
 		const sessionCookie = lucia.createBlankSessionCookie();
-		context.cookies.set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
+		context.cookies.set(
+			sessionCookie.name,
+			sessionCookie.value,
+			sessionCookie.attributes,
+		);
 	}
 
 	context.locals.user = user;

@@ -1,21 +1,21 @@
 ---
 import { safeParse } from 'valibot';
 
-import Layout from '~/layouts/base.astro';
 import { SongForm } from '~/components/ui/song-form';
+import Layout from '~/layouts/base.astro';
 
 import { songs } from '~/services/db.ts';
 import { formatIssues, formToJSON } from '~/services/helpers.ts';
 
 if (!Astro.locals.user) {
-	return new Response("Unauthorized", {
+	return new Response('Unauthorized', {
 		status: 401,
 	});
 }
 
 const id = Astro.params.id!;
 
-let errors: Partial<ReturnType<typeof formatIssues>> = {}
+let errors: Partial<ReturnType<typeof formatIssues>> = {};
 
 const data = await songs.findOne(id);
 
@@ -42,6 +42,11 @@ if (Astro.request.method === 'POST') {
 	<article class="prose | flow">
 		<h1>Editing <b>{data.title}</b></h1>
 
-		<SongForm type="edit" errors={errors} input={data} cancelUrl={'/songs/id/' + data.id} />
+		<SongForm
+			type="edit"
+			errors={errors}
+			input={data}
+			cancelUrl={'/songs/id/' + data.id}
+		/>
 	</article>
 </Layout>

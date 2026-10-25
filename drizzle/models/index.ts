@@ -1,4 +1,11 @@
-import { type Input, length, minLength, object, string, toLowerCase } from 'valibot';
+import {
+	type Input,
+	length,
+	minLength,
+	object,
+	string,
+	toLowerCase,
+} from 'valibot';
 import { _nanoid } from './helpers.ts';
 
 export const user = object({

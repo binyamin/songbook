@@ -8,12 +8,12 @@ import { formatIssues, formToJSON } from '~/services/helpers.ts';
 import { SongForm } from '~/components/ui/song-form';
 
 if (!Astro.locals.user) {
-	return new Response("Unauthorized", {
+	return new Response('Unauthorized', {
 		status: 401,
 	});
 }
 
-let errors: Partial<ReturnType<typeof formatIssues>> = {}
+let errors: Partial<ReturnType<typeof formatIssues>> = {};
 
 if (Astro.request.method === 'POST') {
 	const input = formToJSON(await Astro.request.formData());

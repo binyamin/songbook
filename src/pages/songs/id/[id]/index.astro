@@ -1,9 +1,9 @@
 ---
 import { Show } from 'solid-js';
 
+import { Button, LinkButton } from '~/components/elements/button';
 import Layout from '~/layouts/base.astro';
 import { songs } from '~/services/db.ts';
-import { Button, LinkButton } from '~/components/elements/button';
 
 const id = Astro.params.id!;
 
@@ -13,16 +13,21 @@ if (!data) {
 }
 ---
 
-<Layout title={data.title + " | Songs"}>
+<Layout title={data.title + ' | Songs'}>
 	<article class="prose | flow">
-		<div class="l-repel" style='--repel-align: center;'>
+		<div class="l-repel" style="--repel-align: center">
 			<h1>{data.title}</h1>
 
 			<Show when={Astro.locals.user}>
 				<div class="l-cluster">
-					<LinkButton variant="text" href={'/songs/id/' + data.id + '/edit'}>Edit</LinkButton>
-					<form method="post" action={'/songs/id/' + data.id + '/delete'} name='delete'>
-						<Button type="submit" color='danger' variant="text">Delete</Button>
+					<LinkButton variant="text" href={'/songs/id/' + data.id + '/edit'}
+					>Edit</LinkButton>
+					<form
+						method="post"
+						action={'/songs/id/' + data.id + '/delete'}
+						name="delete"
+					>
+						<Button type="submit" color="danger" variant="text">Delete</Button>
 					</form>
 					<script>
 						const form = document.forms.namedItem('delete');
@@ -31,7 +36,9 @@ if (!data) {
 							form.addEventListener('submit', (ev) => {
 								ev.preventDefault();
 
-								const res = window.confirm('Once you delete this item, you cannot retrieve it. Are you sure you want to delete it?');
+								const res = window.confirm(
+									'Once you delete this item, you cannot retrieve it. Are you sure you want to delete it?',
+								);
 
 								if (res) {
 									form.submit();

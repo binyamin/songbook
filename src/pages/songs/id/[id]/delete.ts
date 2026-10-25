@@ -3,7 +3,7 @@ import { songs } from 'drizzle/api';
 
 export const POST: APIRoute = async (ctx) => {
 	if (!ctx.locals.user) {
-		return new Response("Unauthorized", {
+		return new Response('Unauthorized', {
 			status: 401,
 		});
 	}
@@ -25,4 +25,4 @@ export const POST: APIRoute = async (ctx) => {
 	}
 
 	return ctx.redirect('/songs', 302);
-}
+};

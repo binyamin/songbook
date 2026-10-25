@@ -4,14 +4,15 @@ import './base.css';
 
 import { Show } from 'solid-js';
 
-import { site } from '~/const';
 import { Button } from '~/components/elements/button';
+import { site } from '~/const';
 
 export interface Props {
 	title: string | false;
 }
 
-const docTitle = (Astro.props.title ? Astro.props.title + ' | ' : '') + site.title;
+const docTitle = (Astro.props.title ? Astro.props.title + ' | ' : '')
+	+ site.title;
 const user = Astro.locals.user;
 ---
 
@@ -28,11 +29,14 @@ const user = Astro.locals.user;
 				<a href="/" class="logo" aria-label="Home">{site.title}</a>
 				<ul role="list" class="l-cluster">
 					<li><a href="/songs">Songs</a></li>
-					<Show when={user} >
+					<Show when={user}>
 						<li><a href="/songs/new">New Song</a></li>
-						<li><form method="POST" action="/log-out" name="logout">
-							<Button type="submit" color='danger' variant="soft">Log out</Button>
-						</form></li>
+						<li>
+							<form method="POST" action="/log-out" name="logout">
+								<Button type="submit" color="danger" variant="soft"
+								>Log out</Button>
+							</form>
+						</li>
 					</Show>
 					<Show when={!user}>
 						<li><a href="/log-in">Log in</a></li>

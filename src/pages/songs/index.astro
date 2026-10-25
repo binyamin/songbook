@@ -9,9 +9,7 @@ const list = await songs.findMany();
 	<article class="prose | flow">
 		<h1>Songs</h1>
 		<ol start="1">
-			{list.map((v) =>
-				<li><a href={'/songs/id/' + v.id}>{v.title}</a></li>
-			)}
+			{list.map((v) => <li><a href={'/songs/id/' + v.id}>{v.title}</a></li>)}
 		</ol>
 	</article>
 </Layout>
