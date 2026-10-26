@@ -13,7 +13,6 @@ export interface Props {
 
 const docTitle = (Astro.props.title ? Astro.props.title + ' | ' : '')
 	+ site.title;
-const user = Astro.locals.user;
 ---
 
 <html lang="en">
@@ -29,21 +28,17 @@ const user = Astro.locals.user;
 				<a href="/" class="logo" aria-label="Home">{site.title}</a>
 				<ul role="list" class="l-cluster">
 					<li><a href="/songs">Songs</a></li>
-					<Show when={user}>
-						<li><a href="/songs/new">New Song</a></li>
+					<Show when={Astro.locals.isAdmin}>
 						<li>
-							<form method="POST" action="/log-out" name="logout">
+							<form method="POST" action="/admin/logout" name="logout">
 								<Button type="submit" color="danger" variant="soft"
 								>Log out</Button>
 							</form>
 						</li>
 					</Show>
-					<Show when={!user}>
-						<li><a href="/log-in">Log in</a></li>
-					</Show>
 				</ul>
 			</nav>
-			<Show when={user}>
+			<Show when={Astro.locals.isAdmin}>
 				<script>
 					const form = document.forms.namedItem('logout');
 
@@ -64,7 +59,10 @@ const user = Astro.locals.user;
 				<slot />
 			</main>
 			<footer class="l-center">
-				<p>Made with love by Binyamin Green</p>
+				<p>
+					<span>Made with love by Binyamin Green</span> |{' '}
+					<a href="/admin">Admin</a>
+				</p>
 			</footer>
 		</div>
 	</body>

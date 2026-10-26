@@ -9,3 +9,4 @@ dist/
 drizzle/db/*
 !drizzle/db/.gitkeep
 .vercel/
+.astro/

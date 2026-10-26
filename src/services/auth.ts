@@ -1,52 +1,14 @@
-import { LibSQLAdapter } from '@lucia-auth/adapter-sqlite';
-import { eq } from 'drizzle-orm';
-import { Lucia, TimeSpan } from 'lucia';
-import { Argon2id } from 'oslo/password';
+import { ADMIN_PASSWORD_HASH, ADMIN_PASSWORD_SALT } from 'astro:env/server';
+import { scryptSync, timingSafeEqual } from 'node:crypto';
 
-import { client, db, schema } from '../../drizzle/index.js';
-
-const adapter = new LibSQLAdapter(client, {
-	user: 'user',
-	session: 'session',
-});
-
-export const lucia = new Lucia(adapter, {
-	sessionCookie: {
-		name: 'session',
-		expires: false,
-		attributes: {
-			secure: import.meta.env.PROD,
-		},
-	},
-	sessionExpiresIn: new TimeSpan(30, 'd'),
-	getUserAttributes(user) {
-		return {
-			username: user.username,
-		};
-	},
-});
-
-declare module 'lucia' {
-	interface Register {
-		Lucia: typeof lucia;
-		DatabaseUserAttributes: {
-			username: string;
-		};
-	}
-}
-
-export async function verify(username: string, password: string) {
-	const list = await db.select().from(schema.user).where(
-		eq(schema.user.username, username),
+export function verify(pw: string) {
+	const hash = scryptSync(
+		pw,
+		Buffer.from(ADMIN_PASSWORD_SALT, 'hex'),
+		64,
 	);
 
-	const user = list[0];
-	if (!user || !user.hashed_password) return false;
+	const expected = Buffer.from(ADMIN_PASSWORD_HASH, 'hex');
 
-	const res = await new Argon2id().verify(user.hashed_password, password);
-	if (res) {
-		return user;
-	} else {
-		return null;
-	}
+	return hash.length === expected.length && timingSafeEqual(hash, expected);
 }

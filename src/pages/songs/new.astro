@@ -7,7 +7,7 @@ import { formatIssues, formToJSON } from '~/services/helpers.ts';
 
 import { SongForm } from '~/components/ui/song-form';
 
-if (!Astro.locals.user) {
+if (!Astro.locals.isAdmin) {
 	return new Response('Unauthorized', {
 		status: 401,
 	});

@@ -7,7 +7,7 @@ import Layout from '~/layouts/base.astro';
 import { songs } from '~/services/db.ts';
 import { formatIssues, formToJSON } from '~/services/helpers.ts';
 
-if (!Astro.locals.user) {
+if (!Astro.locals.isAdmin) {
 	return new Response('Unauthorized', {
 		status: 401,
 	});

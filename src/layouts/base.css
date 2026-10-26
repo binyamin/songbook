@@ -8,7 +8,7 @@
 	margin-inline: auto;
 	max-inline-size: 65ch;
 
-	& > footer {
+	& > footer > span {
 		font-weight: 600;
 	}
 }

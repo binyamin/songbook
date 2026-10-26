@@ -1,6 +1,6 @@
 import solid from '@astrojs/solid-js';
 import vercel from '@astrojs/vercel';
-import { defineConfig } from 'astro/config';
+import { defineConfig, envField } from 'astro/config';
 
 export default defineConfig({
 	integrations: [
@@ -14,9 +14,17 @@ export default defineConfig({
 	build: {
 		inlineStylesheets: 'never',
 	},
-	vite: {
-		optimizeDeps: {
-			exclude: ['oslo'],
+	env: {
+		schema: {
+			SESSION_SECRET: envField.string({ context: 'server', access: 'secret' }),
+			ADMIN_PASSWORD_SALT: envField.string({
+				context: 'server',
+				access: 'secret',
+			}),
+			ADMIN_PASSWORD_HASH: envField.string({
+				context: 'server',
+				access: 'secret',
+			}),
 		},
 	},
 });

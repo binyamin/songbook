@@ -1,51 +1,21 @@
 import { defineMiddleware } from 'astro:middleware';
-import { verifyRequestOrigin } from 'lucia';
-
-import { lucia as lucia } from '~/services/auth.ts';
+import { verifyToken } from '~/services/server/session';
 
 export const onRequest = defineMiddleware(async (context, next) => {
-	if (context.request.method !== 'GET') {
-		const originHeader = context.request.headers.get('Origin');
-		// NOTE: You may need to use `X-Forwarded-Host` instead
-		const hostHeader = context.request.headers.get('Host');
-		if (
-			!originHeader || !hostHeader
-			|| !verifyRequestOrigin(originHeader, [hostHeader])
-		) {
-			return new Response(null, {
-				status: 403,
-			});
-		}
+	const { cookies, request, url, locals, redirect } = context;
+	locals.isAdmin = verifyToken(cookies.get('session')?.value);
+
+	const isWrite = !['GET', 'HEAD'].includes(request.method);
+	const isLogin = url.pathname === '/admin/login';
+
+	if (!locals.isAdmin && !isLogin) {
+		if (isWrite) return new Response('Unauthorized', { status: 401 });
+		if (url.pathname.startsWith('/admin')) return redirect('/admin/login', 303);
 	}
 
-	const sessionId = context.cookies.get(lucia.sessionCookieName)?.value ?? null;
-	if (!sessionId) {
-		context.locals.user = null;
-		context.locals.session = null;
-		return next();
+	const response = await next();
+	if (url.pathname.startsWith('/admin')) {
+		response.headers.set('X-Robots-Tag', 'noindex');
 	}
-
-	const { session, user } = await lucia.validateSession(sessionId);
-	if (session && session.fresh) {
-		const sessionCookie = lucia.createSessionCookie(session.id);
-		context.cookies.set(
-			sessionCookie.name,
-			sessionCookie.value,
-			sessionCookie.attributes,
-		);
-	}
-
-	if (!session) {
-		const sessionCookie = lucia.createBlankSessionCookie();
-		context.cookies.set(
-			sessionCookie.name,
-			sessionCookie.value,
-			sessionCookie.attributes,
-		);
-	}
-
-	context.locals.user = user;
-	context.locals.session = session;
-
-	return next();
+	return response;
 });
