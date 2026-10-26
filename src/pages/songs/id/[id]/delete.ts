@@ -1,5 +1,5 @@
 import type { APIRoute } from 'astro';
-import { songs } from 'drizzle/api';
+import { songs } from '~/services/db.ts';
 
 export const POST: APIRoute = async (ctx) => {
 	if (!ctx.locals.isAdmin) {
