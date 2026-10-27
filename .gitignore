@@ -1,11 +1,17 @@
-## Config
-/.vscode/
-.env*
-!.env.example
+## IDE
+.vscode/
+!.vscode/extensions.json
+.idea/
+.zed/
+
+## Secrets
+.env
+.env.local
+.env.*.local
 
 ## Generated
 node_modules/
-dist/
-drizzle/db/*
-!drizzle/db/.gitkeep
+/.svelte-kit/
+/build/
+*.db
 .vercel/

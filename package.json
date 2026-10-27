@@ -4,37 +4,39 @@
 	"private": true,
 	"license": "MIT",
 	"type": "module",
-	"scripts": {
-		"dev": "astro dev",
-		"build": "astro build",
-		"build:prod": "node scripts/migrate.js && astro build",
-		"preview": "astro build && astro preview",
-		"db:generate": "drizzle-kit generate:sqlite",
-		"db:migrate": "node scripts/migrate.js"
+	"imports": {
+		"#lib": "./src/lib/index.js",
+		"#lib/*": "./src/lib/*"
 	},
-	"dependencies": {
-		"@evilmartians/harmony": "^1.2.0",
-		"@kochav/css": "gitlab:binyamin/kochav-css",
-		"solid-js": "^1.8.15"
+	"scripts": {
+		"dev": "vite dev",
+		"build": "vite build",
+		"build:prod": "drizzle-kit migrate && vite build",
+		"preview": "vite preview",
+		"prepare": "svelte-kit sync || echo ''",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"db:generate": "drizzle-kit generate",
+		"db:migrate": "drizzle-kit migrate"
 	},
 	"devDependencies": {
-		"@astrojs/solid-js": "^4.0.1",
-		"@astrojs/vercel": "^7.3.1",
-		"@libsql/client": "^0.4.3",
-		"@lucia-auth/adapter-sqlite": "^3.0.0",
-		"astro": "^4.4.0",
-		"chalk": "^5.3.0",
-		"dotenv": "^16.4.4",
-		"drizzle-kit": "^0.20.14",
-		"drizzle-orm": "^0.29.3",
-		"drizzle-valibot": "^0.1.1",
-		"lucia": "^3.0.1",
-		"nanoid": "^5.0.5",
-		"oslo": "^1.1.1",
-		"postcss-jit-props": "^1.0.14",
-		"valibot": "^0.27.1"
+		"@evilmartians/harmony": "^1.4.0",
+		"@kochav/css": "gitlab:binyamin/kochav-css#semver:^0.2.0",
+		"@libsql/client": "^0.18.0",
+		"@sveltejs/adapter-vercel": "^7.0.1",
+		"@sveltejs/kit": "^3.1.0",
+		"@sveltejs/vite-plugin-svelte": "^7.3.1",
+		"drizzle-kit": "^0.31.11",
+		"drizzle-orm": "^0.45.4",
+		"drizzle-valibot": "^0.4.2",
+		"nanoid": "^6.0.2",
+		"postcss-jit-props": "^1.0.16",
+		"svelte": "^5.57.2",
+		"svelte-check": "^4.7.7",
+		"valibot": "^1.5.0",
+		"vite": "^8.3.5"
 	},
-	"resolutions": {
-		"@libsql/client": "$@libsql/client"
-	}
+	"peerDependencies": {
+		"svelte": "5.x"
+	},
+	"packageManager": "pnpm@12.15.0"
 }

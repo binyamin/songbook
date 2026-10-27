@@ -1,11 +1,7 @@
 {
-	"extends": "astro/tsconfigs/strict",
+	"extends": "$app/tsconfig",
 	"compilerOptions": {
-		"baseUrl": ".",
-		"jsx": "preserve",
-		"jsxImportSource": "solid-js",
-		"paths": {
-			"~/*": ["./src/*"],
-		}
-	}
+		"strict": true
+	},
+	"include": ["src", "vite.config.ts", "drizzle.config.ts"]
 }
