@@ -7,7 +7,6 @@ if (!process.env.DATABASE_URL) {
 
 export default defineConfig({
 	schema: './src/lib/server/db/schema.ts',
-	out: './drizzle/migrations',
 	dialect: 'turso',
 	dbCredentials: {
 		url: process.env.DATABASE_URL,
