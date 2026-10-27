@@ -9,7 +9,7 @@
 	let { form }: PageProps = $props();
 </script>
 
-<PageMeta title={'Log in'} />
+<PageMeta title={'Log in'} ignore />
 
 <article class="prose | flow">
 	<h1>Log in</h1>

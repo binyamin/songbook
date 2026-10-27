@@ -6,7 +6,7 @@
 	let { data, form }: PageProps = $props();
 </script>
 
-<PageMeta title={`Editing "${data.song.title}" | Songs`} />
+<PageMeta title={`Editing "${data.song.title}" | Songs`} ignore />
 
 <article class="prose | flow">
 	<h1>Editing <b>{data.song.title}</b></h1>

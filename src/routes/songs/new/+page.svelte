@@ -6,7 +6,7 @@
 	let { form }: PageProps = $props();
 </script>
 
-<PageMeta title="New Song" />
+<PageMeta title="New Song" ignore />
 
 <article class="prose | flow">
 	<h1>New Song</h1>

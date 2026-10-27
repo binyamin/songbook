@@ -21,7 +21,11 @@ export const load: PageServerLoad = async ({ locals, params }) => {
 };
 
 export const actions = {
-	default: async ({ request, params }) => {
+	default: async ({ request, locals, params }) => {
+		if (!locals.isAdmin) {
+			return error(401, 'Unauthorized');
+		}
+
 		const input = formToJSON(await request.formData());
 
 		const res = safeParse(songs.inputSchema, input);

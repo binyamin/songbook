@@ -3,7 +3,7 @@
 	import PageMeta from '#lib/PageMeta.svelte';
 </script>
 
-<PageMeta title={'Admin'} />
+<PageMeta title={'Admin'} ignore />
 
 <article class="prose | flow">
 	<h1>{site.title}</h1>

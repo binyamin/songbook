@@ -3,6 +3,10 @@
 
 	interface Props {
 		title: string;
+		/**
+		 * @default false
+		 */
+		ignore?: boolean;
 	}
 
 	let props: Props = $props();
@@ -12,4 +16,7 @@
 
 <svelte:head>
 	<title>{title}</title>
+	{#if props.ignore}
+		<meta name="robots" content="noindex" />
+	{/if}
 </svelte:head>
